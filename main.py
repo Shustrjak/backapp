@@ -23,7 +23,7 @@ main_app.add_middleware(
     allow_headers=["*"],
 
 )
-
+# ручки
 @main_app.get("/api/tasks/{tg_id}")
 async def tasks(tg_id: int):
     user = await rq.add_user(tg_id)
