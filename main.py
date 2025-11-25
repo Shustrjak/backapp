@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
 
+import uvicorn
 from pydantic import BaseModel
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -37,7 +38,3 @@ async def profile(tg_id: int):
     return {'complitedTasks': complited_tasks_count}
 
 
-
-
-if __name__ == '__main__':
-    main_app.add_middleware(lifespan=lifespan)
