@@ -1,9 +1,7 @@
 from contextlib import asynccontextmanager
 
 import uvicorn
-from pydantic import BaseModel
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 
 from models import init_db
 import requests as rq
@@ -14,10 +12,10 @@ async def lifespan(app: FastAPI):
     await init_db()
     print('is ready')
     yield
-main_app = FastAPI(title='app')
+main_app = FastAPI(title='app',lifespan=lifespan)
 
 main_app.add_middleware(
-    CORSMiddleware,
+
     allow_origins=['*'],
     allow_credentials=True,
     allow_methods=["*"],
@@ -38,3 +36,8 @@ async def profile(tg_id: int):
     return {'completedTasks': completed_tasks_count}
 
 
+if __name__ == "__main__":
+    uvicorn.run(
+        "main:main_app",
+        reload=True,
+    )
