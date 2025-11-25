@@ -1,7 +1,6 @@
-from sqlalchemy import ForeignKey, String, BigInteger, Column
+from sqlalchemy import ForeignKey, String, BigInteger
 from sqlalchemy.orm import Mapped, DeclarativeBase, mapped_column
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine, AsyncAttrs
-from sqlalchemy.testing.pickleable import User
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine, AsyncAttrs
 
 # engine = create_async_engine('postgresql+asyncpg://{}:{}@{}:{}/{}'.format())
 engine = create_async_engine(url='sqlite+aiosqlite:///db.sqlite3', echo=True)
@@ -23,7 +22,7 @@ class Task(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(String(128))
-    complited: Mapped[bool] = mapped_column(default =False)
+    completed: Mapped[bool] = mapped_column(default =False)
     user: Mapped[int] = mapped_column(ForeignKey('users.id', ondelete='CASCADE', onupdate='CASCADE'))
 
 async def init_db():

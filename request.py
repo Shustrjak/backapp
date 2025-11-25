@@ -29,7 +29,7 @@ async def add_user(tg_id: int):
 async def get_tasks(user_id: int):
     async with async_session() as session:
         tasks = await session.scalars(
-            select(Task).where(Task.user == user_id, Task.complited==False)
+            select(Task).where(Task.user == user_id, Task.completed == False)
         )
         serialized_tasks = [
             TaskSchema.model_validate(t).model_dump() for t in tasks
@@ -37,8 +37,7 @@ async def get_tasks(user_id: int):
 
         return serialized_tasks
 
-async def get_complited_tasks_count(user_id: int):
+
+async def get_completed_tasks_count(user_id):
     async with async_session() as session:
-        return await session.scalar(select(func.count(Task.id)).where(Task.complited == True))
-
-
+        return await session.scalar(select(func.count(Task.id)).where(Task.completed == True))
